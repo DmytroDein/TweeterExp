@@ -27,7 +27,7 @@ public class BenchmarkBeanPostProcessor implements BeanPostProcessor{
         //System.out.println("Bean Name: " + beanName + ":  isAnnotationFound: " + isAnnotationFound);
         if (isAnnotationFound){
             System.out.format("Creating benchmark proxy bean for %s\n", beanName);
-            resultBean = getBenchmarkProxyBean(bean);
+            resultBean = getBenchmarkProxyBean(bean, beanName);
             //System.out.println("SourceBean: " + bean);
             //System.out.println("ResultBean: " + resultBean);
         }
@@ -41,7 +41,7 @@ public class BenchmarkBeanPostProcessor implements BeanPostProcessor{
         return bean;
     }
 
-    private Object getBenchmarkProxyBean(Object bean) {
+    private Object getBenchmarkProxyBean(Object bean, String beanName) {
         Object proxifiedBean = Proxy.newProxyInstance(
                 bean.getClass().getClassLoader(),
                 bean.getClass().getInterfaces(),

@@ -7,6 +7,7 @@
     <groupId>ua.training.lab</groupId>
     <artifactId>Twitter</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
 
 
     <properties>
@@ -17,6 +18,7 @@
         <aspectj.version>1.8.10</aspectj.version>
         <mysql.connector.version>6.0.6</mysql.connector.version>
         <junit.version>4.12</junit.version>
+        <jetty.version>9.3.17.v20170317</jetty.version>
     </properties>
 
 
@@ -40,6 +42,60 @@
             <version>${spring.ver}</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
+
+
+
+        <!-- Embedded Jetty server -->
+        <!--<dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        &lt;!&ndash; Web Application Context Handler &ndash;&gt;
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-webapp</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>-->
+        <!-- Поддержка спецификации аннотации сервлетов, требуется только при запуске Jetty-сервера с конфигураторами -->
+        <!-- Для прямого (упрощенного) запуска Jetty не требуется -->
+       <!-- <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-annotations</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>-->
+        <!-- Требуется в Runtime компиляции JSP, Jetty имплементация JSP -->
+        <!-- При отсутствии в проекте jsp-файлов не требуется -->
+        <!--<dependency>
+            <groupId>org.eclipse.jetty</groupId>
+
+            <artifactId>jetty-jsp</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>-->
     </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.4.2.v20170220</version>
+                <configuration>
+                    <httpConnector>
+                        <port>8888</port>
+                    </httpConnector>
+                </configuration>
+
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
