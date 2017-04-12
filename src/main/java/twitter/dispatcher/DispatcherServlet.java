@@ -2,6 +2,9 @@ package twitter.dispatcher;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import twitter.domain.Tweet;
+import twitter.domain.User;
+import twitter.domain.services.TweetService;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
@@ -25,7 +28,7 @@ public class DispatcherServlet extends HttpServlet implements Servlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String requestURL = req.getRequestURL().toString();
-        String beanName = requestURL.substring(requestURL.lastIndexOf("/")+1);
+        String beanName = requestURL.substring(requestURL.lastIndexOf("/") + 1);
         //PrintWriter printWriter = resp.getWriter();
         //printWriter.write(beanName);
         MyController myController = (MyController) webContext.getBean(beanName);
@@ -35,11 +38,37 @@ public class DispatcherServlet extends HttpServlet implements Servlet {
     @Override
     public void init() throws ServletException {
 //        super.init();
+        /*String webContextName = getInitParameter("contextConfigLocation");
+        webContext = new ClassPathXmlApplicationContext(new String[]{webContextName});*/
         String webContextName = getInitParameter("contextConfigLocation");
-        webContext = new ClassPathXmlApplicationContext(new String[]{webContextName});
-
-        //getServletContext().getInitParameter("contextConfigLocation").
+        System.out.println("DispatcherServlet => init(): Web Context Name: " + webContextName);
+        ConfigurableApplicationContext rootContext =
+                (ConfigurableApplicationContext)getServletContext().getAttribute("context");
+        webContext = new ClassPathXmlApplicationContext(new String[]{webContextName}, rootContext);
+        getServletContext().setAttribute("webcontext", webContext);
+        System.out.println("DispatcherServlet => init(): child context created!");
+        initUserData();
     }
+
+    private void initUserData() {
+        TweetService tweetService = (TweetService) webContext.getBean("tweetService");
+        User user1 = (User) webContext.getBean("user", "Douglas");
+        Tweet tweetFromUser1 = tweetService.createTweet(user1, "Some text #1 from user1!");
+        tweetService.addTweet(tweetFromUser1);
+        tweetFromUser1 = tweetService.createTweet(user1, "Some text #2 from user1!");
+        tweetService.addTweet(tweetFromUser1);
+        tweetFromUser1 = tweetService.createTweet(user1, "Some text #3 from user1!");
+        tweetService.addTweet(tweetFromUser1);
+
+        User user2 = (User) webContext.getBean("user", "Michael");
+        Tweet tweetFromUser2 = tweetService.createTweet(user2, "Some text #1 from user2!");
+        tweetService.addTweet(tweetFromUser2);
+        tweetFromUser2 = tweetService.createTweet(user2, "Some text #2 from user2!");
+        tweetService.addTweet(tweetFromUser2);
+        tweetFromUser2 = tweetService.createTweet(user2, "Some text #3 from user2!");
+        tweetService.addTweet(tweetFromUser2);
+    }
+
 
     @Override
     public void destroy() {
