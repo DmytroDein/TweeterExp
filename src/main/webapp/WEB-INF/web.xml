@@ -13,7 +13,7 @@
         <listener-class>twitter.listeners.MyContextListener</listener-class>
     </listener>
 
-    <servlet>
+    <!--<servlet>
         <description>DispatcherController</description>
         <servlet-name>Dispatcher</servlet-name>
         <servlet-class>twitter.dispatcher.DispatcherServlet</servlet-class>
@@ -21,17 +21,27 @@
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:/mywebcontext.xml</param-value>
         </init-param>
+    </servlet>-->
+
+    <servlet>
+        <servlet-name>WebDispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>WEB-INF/webContext.xml</param-value>
+        </init-param>
     </servlet>
 
-    <servlet-mapping>
+   <!-- <servlet-mapping>
         <servlet-name>Dispatcher</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/servlet/*</url-pattern>
+    </servlet-mapping>-->
+
+    <servlet-mapping>
+        <servlet-name>WebDispatcher</servlet-name>
+        <url-pattern>/web/*</url-pattern>
     </servlet-mapping>
 
-    <session-config>
-        <session-timeout>30</session-timeout>
-    </session-config>
-    
-    
     
 </web-app>

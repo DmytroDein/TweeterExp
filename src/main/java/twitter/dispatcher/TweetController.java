@@ -1,10 +1,7 @@
 package twitter.dispatcher;
 
-import org.springframework.beans.factory.BeanNameAware;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.stereotype.Component;
 import twitter.domain.services.TweetService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,14 +10,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
 
-//@Component
-public class HelloController implements MyController, BeanNameAware {
+public class TweetController implements MyController{
 
     private String beanName;
     private TweetService tweetService;
 
-    /*@Autowired
-    @Qualifier("tweetService")*/
+    public void setBeanName(String beanName) {
+        this.beanName = beanName;
+    }
+
     public void setTweetService(TweetService tweetService) {
         this.tweetService = tweetService;
     }
@@ -49,12 +47,7 @@ public class HelloController implements MyController, BeanNameAware {
     private void webPrintTweets(TweetService tweetService, PrintWriter out) {
         out.write("<br/><b>======================== List of tweets: =======================</b><br/>");
         tweetService.findAll().forEach(e ->
-            out.write("Tweet: " + e +  "<br/>")
+                out.write("Tweet: " + e +  "<br/>")
         );
-    }
-
-    @Override
-    public void setBeanName(String s) {
-        beanName = s;
     }
 }

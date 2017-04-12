@@ -2,6 +2,7 @@ package twitter.dispatcher;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import twitter.dispatcher.mapping.HandlerMapping;
 import twitter.domain.Tweet;
 import twitter.domain.User;
 import twitter.domain.services.TweetService;
@@ -27,10 +28,10 @@ public class DispatcherServlet extends HttpServlet implements Servlet {
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String requestURL = req.getRequestURL().toString();
-        String beanName = requestURL.substring(requestURL.lastIndexOf("/") + 1);
-        //PrintWriter printWriter = resp.getWriter();
-        //printWriter.write(beanName);
+        HandlerMapping handlerMapping = webContext.getBean(HandlerMapping.class);
+        //String requestURL = req.getRequestURL().toString();
+        //String beanName = requestURL.substring(requestURL.lastIndexOf("/") + 1);
+        String beanName = handlerMapping.beanNameFromRequest(req);
         MyController myController = (MyController) webContext.getBean(beanName);
         myController.handleRequest(req, resp);
     }

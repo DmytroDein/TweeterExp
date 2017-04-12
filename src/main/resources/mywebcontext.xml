@@ -11,6 +11,15 @@
     <context:component-scan base-package="twitter.domain"/>
 -->
 
-    <bean name="hello" class="twitter.dispatcher.HelloController"/>
+    <bean name="hello" class="twitter.dispatcher.HelloController">
+        <property name="tweetService" ref="tweetService"/>
+    </bean>
+
+    <bean name="tweets" class="twitter.dispatcher.TweetController">
+        <property name="tweetService" ref="tweetService"/>
+    </bean>
+
+    <bean name="handlerMapper" class="twitter.dispatcher.mapping.BeanNameFromURLhandlerMapping"/>
+
 
 </beans>
