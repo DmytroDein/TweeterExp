@@ -60,6 +60,8 @@ public class SpringAppRunner {
         /*Tweet tweet = tweetService.createEmptyTweet();
         System.out.println("\nEmpty tweet by 'lookup': " + tweet.getClass().getName());*/
 
+        //System.out.println(tweetService.getClass().getName());
+
         context.close();
 
     }

@@ -42,6 +42,16 @@ public class BenchmarkBeanPostProcessor implements BeanPostProcessor{
     }
 
     private Object getBenchmarkProxyBean(Object bean, String beanName) {
+        /*System.out.println("getBenchmarkProxyBean() => bean name: " + beanName);
+        Class<?>[] beanInterfaces = null;
+        try {
+            //beanInterfaces = Class.forName(beanName).getInterfaces();
+            beanInterfaces = Class.forName("TweetServiceImpl").getInterfaces();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }*/
+
+
         Object proxifiedBean = Proxy.newProxyInstance(
                 bean.getClass().getClassLoader(),
                 bean.getClass().getInterfaces(),
