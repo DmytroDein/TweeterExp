@@ -3,6 +3,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ public class TimeLine {
 
     private final List<Tweet> tweets = new ArrayList<>();
     private final User user;
+    private LocalDateTime dateOfCreation;
 
     public TimeLine(User user) {
         this.user = user;

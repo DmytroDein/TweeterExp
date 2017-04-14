@@ -4,6 +4,9 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Component()
 @Scope("prototype")
 @Lazy
@@ -11,6 +14,10 @@ public class Tweet {
 
     private User user;
     private String text;
+    private LocalDateTime date;
+    private List<User> retweetedBy;
+    private List<User> likedBy;
+    private List<User> mentionedInTweet;
 
     public Tweet() {
     }
