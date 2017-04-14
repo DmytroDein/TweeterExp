@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import twitter.domain.Tweet;
 import twitter.domain.User;
 import twitter.infrastructure.annotations.Benchmark;
@@ -16,7 +17,7 @@ import twitter.domain.repository.TweetRepository;
 
 import java.util.List;
 
-@Component("tweetService")
+@Service("tweetService")
 //@Scope("prototype")
 public class TweetServiceImpl implements TweetService, ApplicationContextAware{
 
@@ -47,7 +48,7 @@ public class TweetServiceImpl implements TweetService, ApplicationContextAware{
     }
 
     @Override
-    @Benchmark(value = true)
+    //@Benchmark(value = true)
     public Tweet createTweet(User user, String tweetText){
         //System.out.println("Creating tweet...");
         Tweet tweet = createNewTweet();
