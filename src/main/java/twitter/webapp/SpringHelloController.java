@@ -14,7 +14,6 @@ import twitter.domain.services.TweetService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -38,7 +37,7 @@ public class SpringHelloController {
     @RequestMapping("/hello")
     public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         try (PrintWriter out = response.getWriter()){
-            out.write("<p> hello from Hello controller!</p>");
+            out.write("<p> Hello from Hello controller!</p>");
             tweetService.findAll().forEach(e ->
                     out.write("Tweet: " + e +  "<br/>")
             );
@@ -49,15 +48,7 @@ public class SpringHelloController {
     @RequestMapping(value = "/tweets", method = RequestMethod.GET)
 //    @GetMapping("/tweets")
     public String allTweets(Model model){
-        /*List<Tweet> allTweets = tweetService.findAll();
-        model.addAttribute("tweets", allTweets);*/
-
-        List<Integer> allTweets = new ArrayList<>();
-        allTweets.add(1);
-        allTweets.add(2);
-        allTweets.add(3);
-        allTweets.add(4);
-
+        List<Tweet> allTweets = tweetService.findAll();
         model.addAttribute("tweets", allTweets);
         return "jsp-tweets-page";
     }

@@ -6,7 +6,7 @@
     <title>Tweets</title>
 </head>
 <body>
-    ${2+2}
+    <%--${2+2}--%>
     <p>All Tweets</p>
     <c:forEach var="tweet" items="${tweets}">
         Tweet <c:out value="${tweet}"/><p>
