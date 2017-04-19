@@ -1,19 +1,21 @@
 package twitter.domain;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.*;
 
 @Component
 @Scope("prototype")
 @Lazy
-public class User {
+public class User implements UserActivity{
     private String userName;
-    private List<Tweet> usersTweets;
+    private List<Tweet> usersTweets = new ArrayList<>();
     private List<User> subscribedTo;
-    private List<Tweet> mentionedInTweets;
+    private Set<Tweet> mentionedInTweets = new LinkedHashSet<>();
     private UserProfile profile;
 
     public User(String userName) {
@@ -32,6 +34,8 @@ public class User {
         return usersTweets;
     }
 
+  /*  @Autowired
+    @Scope("prototype")*/
     public void setUsersTweets(List<Tweet> usersTweets) {
         this.usersTweets = usersTweets;
     }
@@ -50,6 +54,40 @@ public class User {
 
     public void setProfile(UserProfile profile) {
         this.profile = profile;
+    }
+
+    public Set<Tweet> getMentionedInTweets() {
+        return mentionedInTweets;
+    }
+
+    public void setMentionedInTweets(Set<Tweet> mentionedInTweets) {
+        this.mentionedInTweets = mentionedInTweets;
+    }
+
+    @Override
+    public void mentionUser(Tweet tweet){
+        mentionedInTweets.add(tweet);
+    }
+
+    @Override
+    public void reTweet(Tweet tweet) {
+        usersTweets.add(tweet);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        return userName.equals(user.userName);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return userName.hashCode();
     }
 
     @Override

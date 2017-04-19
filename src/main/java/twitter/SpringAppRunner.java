@@ -5,7 +5,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import twitter.domain.Tweet;
 import twitter.domain.User;
-import twitter.domain.repository.TweetRepository;
 import twitter.domain.services.TweetService;
 
 import java.util.Arrays;
@@ -16,7 +15,9 @@ public class SpringAppRunner {
         ConfigurableApplicationContext childContext = new ClassPathXmlApplicationContext(new String[]{"service.xml"}, context);
 
         TweetService tweetService = (TweetService)childContext.getBean("tweetService");
-        User user1 = (User) context.getBean("user", "Douglas");
+
+/*//        User user1 = (User) context.getBean("user", "Douglas");
+        User user1 = tweetService.getUser("Douglas");
         Tweet tweetFromUser1 = tweetService.createTweet(user1, "Some text #1 from user1!" );
         tweetService.addTweet(tweetFromUser1);
         tweetFromUser1 = tweetService.createTweet(user1, "Some text #2 from user1!" );
@@ -24,13 +25,14 @@ public class SpringAppRunner {
         tweetFromUser1 = tweetService.createTweet(user1, "Some text #3 from user1!" );
         tweetService.addTweet(tweetFromUser1);
 
-        User user2 = (User) childContext.getBean("user", "Michael");
+//        User user2 = (User) childContext.getBean("user", "Michael");
+        User user2 = tweetService.getUser("Michael");
         Tweet tweetFromUser2 = tweetService.createTweet(user2, "Some text #1 from user2!" );
         tweetService.addTweet(tweetFromUser2);
         tweetFromUser2 = tweetService.createTweet(user2, "Some text #2 from user2!" );
         tweetService.addTweet(tweetFromUser2);
         tweetFromUser2 = tweetService.createTweet(user2, "Some text #3 from user2!" );
-        tweetService.addTweet(tweetFromUser2);
+        tweetService.addTweet(tweetFromUser2);*/
 
         System.out.println("\n---------------- List of tweets ------------------");
         tweetService.findAll().forEach(System.out::println);
@@ -57,11 +59,42 @@ public class SpringAppRunner {
 
         System.out.println(ctx2.getBeanFactory().getBeanDefinition("tempable"));*/
 
-        /*Tweet tweet = tweetService.createEmptyTweet();
+    /*    Tweet tweet = tweetService.createEmptyTweet();
         System.out.println("\nEmpty tweet by 'lookup': " + tweet.getClass().getName());*/
 
         //System.out.println(tweetService.getClass().getName());
 
+        // Sample operations for functionality enhancing
+//        User user3 = (User) context.getBean("user", "Freddy");
+        User user3 = tweetService.getUser("Freddy");
+        Tweet tweetFromUser3 = tweetService.createTweet(user3, "Some text #1 from user3!" );
+        tweetService.addTweet(tweetFromUser3);
+
+        // Like tweet
+//        User user1 = (User) context.getBean("user", "Douglas");
+        System.out.println("\n-------------------------- Like check: ------------------------------");
+        User user1 = tweetService.getUser("Douglas");
+        tweetFromUser3.like(user1);
+        System.out.println("Tweet: '" + tweetFromUser3.getText() + "'" + "; Author: " + tweetFromUser3.getUser());
+        System.out.print("Liked by: ");
+        tweetFromUser3.getLikedBy().forEach(System.out::println);
+
+        // Mention
+        System.out.println("\n------------------------- Mention check: ----------------------------");
+        tweetFromUser3.mentionUser(user1);
+        System.out.println("Tweet: '" + tweetFromUser3.getText() + "'" + "; Author: " + tweetFromUser3.getUser());
+        System.out.print("Tweet mentions: ");
+        tweetFromUser3.getMentionedInTweet().forEach(System.out::println);
+
+        // ReTweeting
+//        tweetFromUser3.reTweet(user1);
+        System.out.println("\n------------------------ ReTweeting check: --------------------------");
+        user1.reTweet(tweetFromUser3);
+        System.out.print("User's '" + user1.getUserName() + "' tweets:\n");
+        user1.getUsersTweets().forEach(System.out::println);
+
+        // Close contexts
+        childContext.close();
         context.close();
 
     }

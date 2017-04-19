@@ -13,4 +13,6 @@ public interface TweetService {
     Tweet createTweet(User user, String tweetText);
     Tweet createEmptyTweet();
 
+    User getUser(String userName);
+
 }

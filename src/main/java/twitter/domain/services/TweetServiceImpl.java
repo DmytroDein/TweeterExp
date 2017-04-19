@@ -12,23 +12,65 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import twitter.domain.Tweet;
 import twitter.domain.User;
+import twitter.domain.repository.UserRepository;
 import twitter.infrastructure.annotations.Benchmark;
 import twitter.domain.repository.TweetRepository;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
 
 @Service("tweetService")
 //@Scope("prototype")
+@Lazy
 public class TweetServiceImpl implements TweetService, ApplicationContextAware{
 
     //@Autowired
     private final TweetRepository tweetRepository;
+    private final UserRepository userRepository;
     ApplicationContext serviceContext;
 
-    @Autowired
+    /*@Autowired
     public TweetServiceImpl(TweetRepository tweetRepository) {
         this.tweetRepository = tweetRepository;
+    }*/
+
+    @Autowired
+    public TweetServiceImpl(TweetRepository tweetRepository, UserRepository userRepository) {
+        this.tweetRepository = tweetRepository;
+        this.userRepository = userRepository;
+    }
+
+    @Override
+    public User getUser(String userName) {
+        Optional<User> checkedUser = Optional.ofNullable(userRepository.getUser(userName));
+        return checkedUser.orElseGet(() -> {
+            User user = (User)serviceContext.getBean("user", userName);
+            userRepository.save(user);
+            return user;
+        });
+    }
+
+    @PostConstruct
+    public void mockTweetsData(){
+//        User user1 = (User) serviceContext.getBean("user", "Douglas");
+        User user1 = getUser("Douglas");
+        Tweet tweetFromUser1 = createTweet(user1, "Some text #1 from user1!" );
+        addTweet(tweetFromUser1);
+        tweetFromUser1 = createTweet(user1, "Some text #2 from user1!" );
+        addTweet(tweetFromUser1);
+        tweetFromUser1 = createTweet(user1, "Some text #3 from user1!" );
+        addTweet(tweetFromUser1);
+
+//        User user2 = (User) serviceContext.getBean("user", "Michael");
+        User user2 = getUser("Michael");
+        Tweet tweetFromUser2 = createTweet(user2, "Some text #1 from user2!" );
+        addTweet(tweetFromUser2);
+        tweetFromUser2 = createTweet(user2, "Some text #2 from user2!" );
+        addTweet(tweetFromUser2);
+        tweetFromUser2 = createTweet(user2, "Some text #3 from user2!" );
+        addTweet(tweetFromUser2);
     }
 
     @Override
@@ -38,8 +80,9 @@ public class TweetServiceImpl implements TweetService, ApplicationContextAware{
     }
 
     @Override
-    //@Benchmark(value = true)
+//    @Benchmark(value = true)
     public void addTweet(Tweet tweet) {
+        tweet.getUser().getUsersTweets().add(tweet);
         tweetRepository.save(tweet);
     }
 
@@ -49,7 +92,7 @@ public class TweetServiceImpl implements TweetService, ApplicationContextAware{
     }
 
     @Override
-    //@Benchmark(value = true)
+//    @Benchmark(value = true)
     public Tweet createTweet(User user, String tweetText){
         //System.out.println("Creating tweet...");
         Tweet tweet = createNewTweet();
@@ -62,28 +105,9 @@ public class TweetServiceImpl implements TweetService, ApplicationContextAware{
         return (Tweet) serviceContext.getBean("tweet");
     }
 
-    //@Lookup
+//    @Lookup
     public Tweet createEmptyTweet(){
         return null;
-    }
-
-    @PostConstruct
-    public void mockTweetsData(){
-        User user1 = (User) serviceContext.getBean("user", "Douglas");
-        Tweet tweetFromUser1 = createTweet(user1, "Some text #1 from user1!" );
-        addTweet(tweetFromUser1);
-        tweetFromUser1 = createTweet(user1, "Some text #2 from user1!" );
-        addTweet(tweetFromUser1);
-        tweetFromUser1 = createTweet(user1, "Some text #3 from user1!" );
-        addTweet(tweetFromUser1);
-
-        User user2 = (User) serviceContext.getBean("user", "Michael");
-        Tweet tweetFromUser2 = createTweet(user2, "Some text #1 from user2!" );
-        addTweet(tweetFromUser2);
-        tweetFromUser2 = createTweet(user2, "Some text #2 from user2!" );
-        addTweet(tweetFromUser2);
-        tweetFromUser2 = createTweet(user2, "Some text #3 from user2!" );
-        addTweet(tweetFromUser2);
     }
 
 }
