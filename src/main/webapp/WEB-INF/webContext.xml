@@ -11,8 +11,10 @@
    http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 
- <!--   <context:annotation-config/>
-    <context:component-scan base-package="twitter.webapp"/>-->
+    <context:annotation-config/>
+    <context:component-scan base-package="twitter.webapp.*"/>
+    <!--<mvc:annotation-driven conversion-service="convertionService"/>-->
+
     <mvc:annotation-driven/>
     <mvc:view-resolvers>
         <mvc:jsp prefix="/WEB-INF/jsp/"
@@ -24,10 +26,28 @@
     <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
 
     <!--<bean name="/hello" class="twitter.webapp.SpringHelloController"/>-->
-    <bean class="twitter.webapp.SpringHelloController">
+    <bean class="twitter.webapp.TweeterController">
         <constructor-arg ref="tweetService"/>
     </bean>
 
     <bean class="twitter.webapp.UserController"/>
+
+    <!--<bean name="convertionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="twitter.webapp.TweetConverter"/>
+            </set>
+        </property>
+    </bean>-->
+
+    <!--<bean class="twitter.webapp.advices.TweetControllersAdvice">
+        <constructor-arg ref="tweetService"/>
+    </bean>
+
+    <bean class="twitter.webapp.advices.UserControllerAdvice">
+        <constructor-arg ref="tweetService"/>
+    </bean>-->
+
+
 
 </beans>
