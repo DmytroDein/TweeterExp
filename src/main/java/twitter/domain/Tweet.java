@@ -14,7 +14,9 @@ import java.util.Set;
 @Scope("prototype")
 @Lazy
 public class Tweet implements TweetActions{
+    private static long tweetIdCounter = 1;
 
+    private long tweetId = tweetIdCounter++;
     private User user;
     private String text;
 
@@ -29,6 +31,14 @@ public class Tweet implements TweetActions{
     public Tweet(User user, String text) {
         this.user = user;
         this.text = text;
+    }
+
+    public long getTweetId() {
+        return tweetId;
+    }
+
+    public void setTweetId(int tweetId) {
+        this.tweetId = tweetId;
     }
 
     public LocalDateTime getDate() {
@@ -116,8 +126,10 @@ public class Tweet implements TweetActions{
     @Override
     public String toString() {
         return "Tweet{" +
-                "user=" + user +
+                "tweetId=" + tweetId +
+                ", user=" + user +
                 ", text='" + text + '\'' +
+                ", date=" + date +
                 '}';
     }
 }

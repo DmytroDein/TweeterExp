@@ -12,7 +12,9 @@ public interface TweetService {
     void addTweet(Tweet tweet);
     Tweet createTweet(User user, String tweetText);
     Tweet createEmptyTweet();
+    Tweet getTweet(long tweetId);
 
     User getUser(String userName);
+    User getUser(long userId);
 
 }

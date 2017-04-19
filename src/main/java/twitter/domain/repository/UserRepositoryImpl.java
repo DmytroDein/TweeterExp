@@ -11,6 +11,14 @@ public class UserRepositoryImpl implements UserRepository {
     private Set<User> users = new HashSet<>();
 
     @Override
+    public User getUser(long userId) {
+        return users.stream()
+                .filter(e -> e.getUserId() == userId)
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
     public void save(User user) {
         users.add(user);
     }

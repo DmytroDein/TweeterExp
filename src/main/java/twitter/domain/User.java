@@ -12,6 +12,9 @@ import java.util.*;
 @Scope("prototype")
 @Lazy
 public class User implements UserActivity{
+    private static long userIdCounter = 1;
+
+    private long userId = userIdCounter++;
     private String userName;
     private List<Tweet> usersTweets = new ArrayList<>();
     private List<User> subscribedTo;
@@ -64,6 +67,14 @@ public class User implements UserActivity{
         this.mentionedInTweets = mentionedInTweets;
     }
 
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     @Override
     public void mentionUser(Tweet tweet){
         mentionedInTweets.add(tweet);
@@ -93,7 +104,8 @@ public class User implements UserActivity{
     @Override
     public String toString() {
         return "User{" +
-                "userName='" + userName + '\'' +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
                 '}';
     }
 }

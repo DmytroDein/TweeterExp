@@ -42,16 +42,6 @@ public class TweetServiceImpl implements TweetService, ApplicationContextAware{
         this.userRepository = userRepository;
     }
 
-    @Override
-    public User getUser(String userName) {
-        Optional<User> checkedUser = Optional.ofNullable(userRepository.getUser(userName));
-        return checkedUser.orElseGet(() -> {
-            User user = (User)serviceContext.getBean("user", userName);
-            userRepository.save(user);
-            return user;
-        });
-    }
-
     @PostConstruct
     public void mockTweetsData(){
 //        User user1 = (User) serviceContext.getBean("user", "Douglas");
@@ -74,9 +64,23 @@ public class TweetServiceImpl implements TweetService, ApplicationContextAware{
     }
 
     @Override
-//    @Benchmark
-    public List<Tweet> findAll() {
-        return tweetRepository.findAll();
+    public Tweet getTweet(long tweetId) {
+        return tweetRepository.findById(tweetId);
+    }
+
+    @Override
+    public User getUser(long userId) {
+        return userRepository.getUser(userId);
+    }
+
+    @Override
+    public User getUser(String userName) {
+        Optional<User> checkedUser = Optional.ofNullable(userRepository.getUser(userName));
+        return checkedUser.orElseGet(() -> {
+            User user = (User)serviceContext.getBean("user", userName);
+            userRepository.save(user);
+            return user;
+        });
     }
 
     @Override
@@ -87,8 +91,9 @@ public class TweetServiceImpl implements TweetService, ApplicationContextAware{
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.serviceContext = applicationContext;
+//    @Benchmark
+    public List<Tweet> findAll() {
+        return tweetRepository.findAll();
     }
 
     @Override
@@ -105,9 +110,14 @@ public class TweetServiceImpl implements TweetService, ApplicationContextAware{
         return (Tweet) serviceContext.getBean("tweet");
     }
 
-//    @Lookup
+    //    @Lookup
     public Tweet createEmptyTweet(){
         return null;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.serviceContext = applicationContext;
     }
 
 }

@@ -22,6 +22,14 @@ public class TweetRepositoryImpl implements TweetRepository {
     }
 
     @Override
+    public Tweet findById(long tweetId) {
+        return tweetRepo.stream()
+                .filter(e -> e.getTweetId() == tweetId)
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
 //    @Benchmark(value = true)
     public List<Tweet> findAll() {
         return new ArrayList<>(tweetRepo);
