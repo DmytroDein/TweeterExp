@@ -17,7 +17,7 @@ public class User implements UserActivity{
     private long userId = userIdCounter++;
     private String userName;
     private List<Tweet> usersTweets = new ArrayList<>();
-    private List<User> subscribedTo;
+    private Set<User> subscribedTo = new HashSet<>();
     private Set<Tweet> mentionedInTweets = new LinkedHashSet<>();
     private UserProfile profile;
 
@@ -44,11 +44,12 @@ public class User implements UserActivity{
     }
 
     public List<User> getSubscribedTo() {
-        return subscribedTo;
+//        return subscribedTo;
+        return new ArrayList<>(subscribedTo);
     }
 
     public void setSubscribedTo(List<User> subscribedTo) {
-        this.subscribedTo = subscribedTo;
+        this.subscribedTo = new HashSet<>(subscribedTo);
     }
 
     public UserProfile getProfile() {
@@ -78,6 +79,11 @@ public class User implements UserActivity{
     @Override
     public void mentionUser(Tweet tweet){
         mentionedInTweets.add(tweet);
+    }
+
+    @Override
+    public void subscribeTo(User user){
+        subscribedTo.add(user);
     }
 
     @Override

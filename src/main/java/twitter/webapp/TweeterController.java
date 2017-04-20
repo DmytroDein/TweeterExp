@@ -17,6 +17,7 @@ import java.beans.PropertyEditor;
 import java.beans.PropertyEditorSupport;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -49,7 +50,7 @@ public class TweeterController {
     }
 
     @RequestMapping(value = "/tweets", method = RequestMethod.GET)
-//    @GetMapping("/tweets")
+//    @GetMapping("/getTweets")
     public String allTweets(Model model){
         List<Tweet> allTweets = tweetService.findAll();
         model.addAttribute("tweets", allTweets);
@@ -68,7 +69,9 @@ public class TweeterController {
     @RequestMapping(value = "/tweet/modify", method = RequestMethod.GET)   //http://localhost:8888/web/tweet/modify?id=1
     @ResponseBody
     public String allTweets(@RequestParam("id") Tweet tweet){
-        return tweet.toString();
+        if(Objects.nonNull(tweet)) {
+            return tweet.toString();
+        } else return "Tweet not found!";
     }
 
     /*//@InitBinder // instead of TweetConverter working

@@ -47,7 +47,7 @@ public class HelloController implements MyController, BeanNameAware {
     }
 
     private void webPrintTweets(TweetService tweetService, PrintWriter out) {
-        out.write("<br/><b>======================== List of tweets: =======================</b><br/>");
+        out.write("<br/><b>======================== List of getTweets: =======================</b><br/>");
         tweetService.findAll().forEach(e ->
             out.write("Tweet: " + e +  "<br/>")
         );
