@@ -60,9 +60,7 @@ public class TweeterController {
     @RequestMapping(value = "/tweet/{id}", method = RequestMethod.GET) //http://localhost:8888/web/tweet/1
     @ResponseBody
 //    public String allTweets(@RequestParam("id") long id){  //http://localhost:8888/web/tweet?id=1
-//    public String allTweets(@PathVariable("id") long id){  //http://localhost:8888/web/tweet/1
     public String allTweets(@PathVariable("id") long id){  //http://localhost:8888/web/tweet/1
-
         Tweet tweet = tweetService.getTweet(id);
         return tweet.toString();
     }

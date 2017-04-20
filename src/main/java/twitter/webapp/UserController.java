@@ -17,6 +17,7 @@ public class UserController  {
     public @ResponseBody String createUser(@RequestParam("user") String user){
 //    public @ResponseBody String createUser(User user){
 //    public @ResponseBody String createUser(@ModelAttribute User user){
+//    public @ResponseBody String createUser(@RequestAttribute(name="userAttributeName")  User user){   ////???? unchecked
 //        System.out.println(user);
         User createdUser = new User(user);
         return createdUser.toString();
