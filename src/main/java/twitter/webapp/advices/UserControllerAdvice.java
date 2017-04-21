@@ -8,7 +8,7 @@ import twitter.domain.User;
 import twitter.domain.services.TweetService;
 import twitter.webapp.UserController;
 
-@ControllerAdvice(assignableTypes = {UserController.class})
+//@ControllerAdvice(assignableTypes = {UserController.class})
 //@ControllerAdvice
 public class UserControllerAdvice {
 

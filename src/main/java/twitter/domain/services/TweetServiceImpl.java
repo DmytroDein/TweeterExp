@@ -74,6 +74,11 @@ public class TweetServiceImpl implements TweetService, ApplicationContextAware{
     }
 
     @Override
+    public List<User> getUsers() {
+        return userRepository.findAllUsers();
+    }
+
+    @Override
     public User getUser(String userName) {
         Optional<User> checkedUser = Optional.ofNullable(userRepository.getUser(userName));
         return checkedUser.orElseGet(() -> {
@@ -120,4 +125,9 @@ public class TweetServiceImpl implements TweetService, ApplicationContextAware{
         this.serviceContext = applicationContext;
     }
 
+    @Override
+    public void createUser(String userName) {
+        User user = (User) serviceContext.getBean("user", userName);
+        userRepository.save(user);
+    }
 }

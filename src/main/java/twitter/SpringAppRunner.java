@@ -73,7 +73,7 @@ public class SpringAppRunner {
 
         // Like tweet
 //        User user1 = (User) context.getBean("user", "Douglas");
-        System.out.println("\n-------------------------- Like check: ------------------------------");
+        System.out.println("\n---------------------------- Like check: ----------------------------------");
         User user1 = tweetService.getUser("Douglas");
         tweetFromUser3.like(user1);
         System.out.println("Tweet: '" + tweetFromUser3.getText() + "'" + "; Author: " + tweetFromUser3.getUser());
@@ -81,7 +81,7 @@ public class SpringAppRunner {
         tweetFromUser3.getLikedBy().forEach(System.out::println);
 
         // Mention
-        System.out.println("\n------------------------- Mention check: ----------------------------");
+        System.out.println("\n---------------------------- Mention check: --------------------------------");
         tweetFromUser3.mentionUser(user1);
         System.out.println("Tweet: '" + tweetFromUser3.getText() + "'" + "; Author: " + tweetFromUser3.getUser());
         System.out.print("Tweet mentions: ");
@@ -89,14 +89,14 @@ public class SpringAppRunner {
 
         // ReTweeting
 //        tweetFromUser3.reTweet(user1);
-        System.out.println("\n------------------------ ReTweeting check: --------------------------");
+        System.out.println("\n------------------------------------------------- ReTweeting check: ---------------------------------------------------");
         user1.reTweet(tweetFromUser3);
         System.out.print("User's '" + user1.getUserName() + "' tweets:\n");
         user1.getUsersTweets().forEach(System.out::println);
 
 
         // TimeLine formation
-        System.out.println("\n-------------------- TimeLine formation check: ----------------------");
+        System.out.println("\n------------------------------------ TimeLine formation check (backward sorting): --------------------------------------");
 //        System.out.println("TimeLine of '" + user1.getUserName() + "':");
         System.out.println("TimeLine of '" + user1 + "':");
         TimeLineActions timeLine = (TimeLineActions)childContext.getBean("timeLine", user1);

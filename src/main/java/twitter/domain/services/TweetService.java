@@ -17,4 +17,7 @@ public interface TweetService {
     User getUser(String userName);
     User getUser(long userId);
 
+    List<User> getUsers();
+    void createUser(String userName);
+
 }
