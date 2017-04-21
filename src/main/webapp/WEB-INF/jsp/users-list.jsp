@@ -32,12 +32,12 @@
                 <td>---</td>
                 <td><c:out value="${usr.userName}"/></td>
                 <%--<td><button type="button" class="btn btn-success">Edit</button></td>--%>
-                <td><a href="./edit/${usr.userId}" class="btn btn-success">Edit User</a></td>
+                <td><a href="./addedit/${usr.userId}" class="btn btn-success">Edit User</a></td>
             </tr>
         </c:forEach>
         </tbody>
         <%--<p class="bg-warning"><button type="button" class="btn btn-warning btn-lg">Add User</button></p>--%>
-        <a href="./add" class="btn btn-warning btn-lg" role="button">Add New User</a>
+        <a href="./addedit" class="btn btn-warning btn-lg" role="button">Add New User</a>
 
     </table>
 

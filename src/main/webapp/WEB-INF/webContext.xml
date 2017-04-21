@@ -22,6 +22,8 @@
                  view-class="org.springframework.web.servlet.view.JstlView"/>
     </mvc:view-resolvers>
 
+    <!--<bean id="taskExecutor" class="org.springframework."-->
+
     <!--<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>-->
     <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
 
@@ -49,5 +51,14 @@
     </bean>-->
 
 
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <map>
+                <entry key="UnsupportedOperationException" value="error"/> <!--page name-->
+            </map>
+        </property>
+        <property name="defaultErrorView" value="error"/> <!--page name-->
+        <property name="exceptionAttribute" value="ex"/>  <!--variable-->
+    </bean>
 
 </beans>

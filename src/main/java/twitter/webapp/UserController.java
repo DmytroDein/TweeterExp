@@ -51,21 +51,20 @@ public class UserController  {
         return "users-list";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    @RequestMapping(value = "/addedit", method = RequestMethod.GET)
     public String addNewUser(Model model){
-        return "create-user-form";
+        return "create-update-user";
     }
 
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String createNewUser(@RequestParam("username") String userName, Model model){
-        tweetService.createUser(userName);
-        List<User> usersList = tweetService.getUsers();
-        model.addAttribute("users", usersList);
-        return "users-list";
+    @RequestMapping(value = "/addedit", method = RequestMethod.POST)
+    public String createEditUser(@ModelAttribute User user){
+        System.out.println(user);
+        tweetService.saveUser(user);
+        return "redirect:all";
     }
 
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editUser(@PathVariable("id") long userId, Model model){
         User user = tweetService.getUser(userId);
         System.out.println("editUser() found: " + user);
@@ -73,6 +72,6 @@ public class UserController  {
         model.addAttribute("name", user.getUserName());
         model.addAttribute("id", user.getUserId());
         return "edit-user-form";
-    }
+    }*/
 
 }

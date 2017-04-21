@@ -1,10 +1,10 @@
 package twitter.webapp.advices;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.*;
 import twitter.dispatcher.TweetController;
 import twitter.domain.Tweet;
 import twitter.domain.User;
@@ -12,6 +12,7 @@ import twitter.domain.services.TweetService;
 import twitter.webapp.TweeterController;
 
 import java.beans.PropertyEditorSupport;
+import java.util.Arrays;
 
 @ControllerAdvice(assignableTypes = {TweeterController.class})
 //@ControllerAdvice
@@ -44,6 +45,14 @@ public class TweetControllersAdvice {
                         setValue(tweet);
                     }
                 });
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({UnsupportedOperationException.class})
+    public String onException(Exception ex, Model model){
+        model.addAttribute("err", ex.getMessage());
+        model.addAttribute("err", Arrays.toString(ex.getStackTrace()));
+        return "error";
     }
 
 }

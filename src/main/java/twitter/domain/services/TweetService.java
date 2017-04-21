@@ -20,4 +20,5 @@ public interface TweetService {
     List<User> getUsers();
     void createUser(String userName);
 
+    void saveUser(User user);
 }

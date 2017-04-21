@@ -14,15 +14,24 @@ import java.util.*;
 public class User implements UserActivity{
     private static long userIdCounter = 1;
 
-    private long userId = userIdCounter++;
+    private long userId;
     private String userName;
     private List<Tweet> usersTweets = new ArrayList<>();
     private Set<User> subscribedTo = new HashSet<>();
     private Set<Tweet> mentionedInTweets = new LinkedHashSet<>();
     private UserProfile profile;
 
+    public User() {
+        userId = userIdCounter++;
+    }
+
+    public User(long userId) {
+        this.userId = userId;
+    }
+
     public User(String userName) {
         this.userName = userName;
+        userId = userIdCounter++;
     }
 
     public String getUserName() {
@@ -72,7 +81,7 @@ public class User implements UserActivity{
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

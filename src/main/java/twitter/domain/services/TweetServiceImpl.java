@@ -130,4 +130,9 @@ public class TweetServiceImpl implements TweetService, ApplicationContextAware{
         User user = (User) serviceContext.getBean("user", userName);
         userRepository.save(user);
     }
+
+    @Override
+    public void saveUser(User user){
+        userRepository.save(user);
+    }
 }

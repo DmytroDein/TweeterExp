@@ -90,5 +90,10 @@ public class TweeterController {
     }*/
 
 
+    @RequestMapping(value = "/tweet/error", method = RequestMethod.GET)
+    @ResponseBody
+    public String getError(){
+        throw new UnsupportedOperationException("Custom exception throwed and catched.");
+    }
 
 }
