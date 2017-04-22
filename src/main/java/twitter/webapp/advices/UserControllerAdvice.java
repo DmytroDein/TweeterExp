@@ -15,7 +15,7 @@ import twitter.webapp.UserController;
 
 import java.beans.PropertyEditorSupport;
 
-//@ControllerAdvice(assignableTypes = {UserController.class})
+@ControllerAdvice(assignableTypes = {UserController.class})
 //@ControllerAdvice
 public class UserControllerAdvice {
 
@@ -27,15 +27,24 @@ public class UserControllerAdvice {
     }
 
     //    @ModelAttribute(value = "unnamedUser")
-    @ModelAttribute
+    /*@ModelAttribute
     public User unNamedUser(@RequestParam(name = "userName", required = false) User user){
         //System.out.println("UnNamedUser from 'UserControllerAdvice'");
         System.out.println("@ModelAttribute acquired user: " + user);
         return user;
+    }*/
+
+    @ModelAttribute
+    public User preparedUser(@RequestParam(name = "userId", required = false) User user){
+       /* long localUserId = user.getUserId();
+        if(localUserId != 0) {
+            user = tweetService.getUser(localUserId);
+        }*/
+        return user;
     }
 
     @InitBinder
-    public void tweetBinder(WebDataBinder webDataBinder){
+    public void userBinder(WebDataBinder webDataBinder){
         webDataBinder.registerCustomEditor(
                 User.class,
                 new PropertyEditorSupport() {

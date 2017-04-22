@@ -32,7 +32,8 @@
                 <td>---</td>
                 <td><c:out value="${usr.userName}"/></td>
                 <%--<td><button type="button" class="btn btn-success">Edit</button></td>--%>
-                <td><a href="./addedit/${usr.userId}" class="btn btn-success">Edit User</a></td>
+                <%--<td><a href="./addedit/${usr.userId}" class="btn btn-success">Edit User</a></td>--%>
+                <td><a href="./addedit?userId=${usr.userId}" class="btn btn-success">Edit User</a></td>
             </tr>
         </c:forEach>
         </tbody>

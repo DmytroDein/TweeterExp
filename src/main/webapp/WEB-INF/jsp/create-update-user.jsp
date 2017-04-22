@@ -17,8 +17,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="userName" id="userName"  placeholder="Enter your Username" value="${name}"/>
-                            <input type="hidden" name="id" value="000"/>
+                            <input type="text" class="form-control" name="userName" id="userName"  placeholder="Enter your Username" value="${user.userName}"/>
                         </div>
                     </div>
                 </div>

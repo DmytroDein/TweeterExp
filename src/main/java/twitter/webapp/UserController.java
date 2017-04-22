@@ -51,17 +51,19 @@ public class UserController  {
         return "users-list";
     }
 
-    @RequestMapping(value = "/addedit", method = RequestMethod.GET)
+/*    @RequestMapping(value = "/addedit", method = RequestMethod.GET)
     public String addNewUser(Model model){
         return "create-update-user";
-    }
+    }*/
 
 
-    @RequestMapping(value = "/addedit", method = RequestMethod.POST)
+//    @RequestMapping(value = "/addedit", method = RequestMethod.POST)
+    @RequestMapping(value = "/addedit")
     public String createEditUser(@ModelAttribute User user){
         System.out.println(user);
-        tweetService.saveUser(user);
-        return "redirect:all";
+        //tweetService.saveUser(user);
+//        return "redirect:all";
+        return "create-update-user";
     }
 
     /*@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
