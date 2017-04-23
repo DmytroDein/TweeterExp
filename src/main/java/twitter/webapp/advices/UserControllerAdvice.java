@@ -4,10 +4,7 @@ package twitter.webapp.advices;
 import com.sun.org.apache.xpath.internal.SourceTree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import twitter.domain.Tweet;
 import twitter.domain.User;
 import twitter.domain.services.TweetService;
@@ -28,10 +25,10 @@ public class UserControllerAdvice {
 
     //    @ModelAttribute(value = "unnamedUser")
     /*@ModelAttribute
-    public User unNamedUser(@RequestParam(name = "userName", required = false) User user){
+    public User unNamedUser(){
         //System.out.println("UnNamedUser from 'UserControllerAdvice'");
         System.out.println("@ModelAttribute acquired user: " + user);
-        return user;
+        return user;@RequestParam(name = "userName", required = false) User user
     }*/
 
     @ModelAttribute

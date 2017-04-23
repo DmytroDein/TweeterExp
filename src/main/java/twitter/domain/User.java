@@ -107,13 +107,15 @@ public class User implements UserActivity{
 
         User user = (User) o;
 
-        return userName.equals(user.userName);
-
+        if (userId != user.userId) return false;
+        return userName != null ? userName.equals(user.userName) : user.userName == null;
     }
 
     @Override
     public int hashCode() {
-        return userName.hashCode();
+        int result = (int) (userId ^ (userId >>> 32));
+        result = 31 * result + (userName != null ? userName.hashCode() : 0);
+        return result;
     }
 
     @Override

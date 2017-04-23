@@ -11,7 +11,7 @@
     <div class="row main">
         <div class="main-login main-center">
             <h4>Add new User Form:</h4>
-            <form class="" method="post" action="./addedit">
+            <form method="post" action="./update">
                 <div class="form-group">
                     <label for="username" class="cols-sm-2 control-label">Username</label>
                     <div class="cols-sm-10">

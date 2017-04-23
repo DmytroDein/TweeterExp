@@ -9,6 +9,7 @@ import java.util.*;
 @Repository("UserRepository")
 public class UserRepositoryImpl implements UserRepository {
     private Set<User> users = new HashSet<>();
+//    private List<User> users = new ArrayList<>();
 
     @Override
     public User getUser(long userId) {
@@ -16,11 +17,6 @@ public class UserRepositoryImpl implements UserRepository {
                 .filter(e -> e.getUserId() == userId)
                 .findFirst()
                 .orElse(null);
-    }
-
-    @Override
-    public void save(User user) {
-        users.add(user);
     }
 
     @Override
@@ -32,6 +28,19 @@ public class UserRepositoryImpl implements UserRepository {
             }
         }
         return null;
+    }
+
+    @Override
+    public void save(User user) {
+        Optional<User> userWithSameId = Optional.ofNullable(getUser(user.getUserId()));
+        userWithSameId.ifPresent(usr -> {
+            users.remove(usr);
+            usr.setUserName(user.getUserName());
+        });
+//        users.add(userWithSameId.orElse(user));
+        User userToAdd = userWithSameId.orElse(user);
+        System.out.println("User repo => adding user: " + userToAdd);
+        users.add(userToAdd);
     }
 
     @Override
