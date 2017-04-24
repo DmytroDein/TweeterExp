@@ -1,5 +1,6 @@
 package twitter.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
@@ -42,6 +43,7 @@ public class User implements UserActivity{
         this.userName = userName;
     }
 
+    @JsonBackReference
     public List<Tweet> getUsersTweets() {
         return usersTweets;
     }
@@ -69,6 +71,7 @@ public class User implements UserActivity{
         this.profile = profile;
     }
 
+    @JsonBackReference
     public Set<Tweet> getMentionedInTweets() {
         return mentionedInTweets;
     }

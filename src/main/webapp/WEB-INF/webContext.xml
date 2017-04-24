@@ -53,14 +53,26 @@
     </bean>-->
 
 
-    <!--<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+
+
+
+
+
+
+
+
+
+
+
+
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="exceptionMappings">
             <map>
-                <entry key="UnsupportedOperationException" value="error"/> &lt;!&ndash;page name&ndash;&gt;
+                <entry key="UnsupportedOperationException" value="error"/> <!--page name-->
             </map>
         </property>
-        <property name="defaultErrorView" value="error"/> &lt;!&ndash;page name&ndash;&gt;
-        <property name="exceptionAttribute" value="ex"/>  &lt;!&ndash;variable&ndash;&gt;
-    </bean>-->
+        <property name="defaultErrorView" value="error"/> <!--page name-->
+        <property name="exceptionAttribute" value="ex"/>  <!--variable-->
+    </bean>
 
 </beans>

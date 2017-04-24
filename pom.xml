@@ -19,6 +19,7 @@
         <mysql.connector.version>6.0.6</mysql.connector.version>
         <junit.version>4.12</junit.version>
         <jetty.version>9.3.17.v20170317</jetty.version>
+        <jackson.version>2.8.8</jackson.version>
     </properties>
 
 
@@ -67,6 +68,14 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
 
 
         <!-- Embedded Jetty server -->

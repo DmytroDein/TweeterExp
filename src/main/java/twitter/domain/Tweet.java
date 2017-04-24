@@ -1,5 +1,7 @@
 package twitter.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -53,10 +55,12 @@ public class Tweet implements TweetActions{
         return retweetedBy;
     }
 
+    @JsonManagedReference
     public void setRetweetedBy(List<User> retweetedBy) {
         this.retweetedBy = retweetedBy;
     }
 
+    @JsonManagedReference
     public Set<User> getLikedBy() {
         return likedBy;
     }
@@ -65,6 +69,7 @@ public class Tweet implements TweetActions{
         this.likedBy = likedBy;
     }
 
+    @JsonManagedReference
     public Set<User> getMentionedInTweet() {
         return mentionedInTweet;
     }
