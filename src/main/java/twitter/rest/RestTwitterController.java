@@ -49,6 +49,7 @@ public class RestTwitterController {
         return tweet;
     }
 
+    // Works without annotations '@JsonManagedReference' and '@JsonBackReference' with nulls
     @RequestMapping(method = RequestMethod.POST, value = "/tweets",
             produces = "application/json", consumes = "application/json")
     public Tweet newTweet(@RequestBody Tweet tweet){
