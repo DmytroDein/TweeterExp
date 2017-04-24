@@ -12,7 +12,7 @@
 
 
     <context:annotation-config/>
-    <context:component-scan base-package="twitter.webapp.*"/>
+    <context:component-scan base-package="twitter.webapp"/>
     <!--<mvc:annotation-driven conversion-service="convertionService"/>-->
 
     <mvc:annotation-driven/>
@@ -28,13 +28,13 @@
     <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
 
     <!--<bean name="/hello" class="twitter.webapp.SpringHelloController"/>-->
-    <bean class="twitter.webapp.TweeterController">
+    <!--<bean class="twitter.webapp.TweeterController">
         <constructor-arg ref="tweetService"/>
-    </bean>
+    </bean>-->
 
-    <bean class="twitter.webapp.UserController"/>
+   <!-- <bean class="twitter.webapp.UserController"/>
 
-    <bean class="twitter.webapp.UserUpdateController"/>
+    <bean class="twitter.webapp.UserUpdateController"/>-->
 
     <!--<bean name="convertionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
         <property name="converters">

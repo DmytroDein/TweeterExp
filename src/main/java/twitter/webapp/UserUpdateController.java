@@ -35,7 +35,8 @@ public class UserUpdateController {
     public String updateUser(@ModelAttribute User user, BindingResult result) {
         if (result.hasErrors()){
             System.out.println("Errors:" + result.getErrorCount());
-            System.out.println(Arrays.toString(result.getSuppressedFields()));
+//            System.out.println(Arrays.toString(result.getSuppressedFields()));
+            System.out.println(result);
         }
         System.out.println("updateUser()=> updated user: " + user);
         tweetService.saveUser(user);
