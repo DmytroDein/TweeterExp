@@ -106,6 +106,14 @@ public class SpringAppRunner {
         timeLine.refreshTimeLine();
         timeLine.getTweets().forEach(System.out::println);
 
+
+
+        //Lookup test
+       /* waitInMillis(1000);
+        System.out.println(tweetService);
+        Tweet tweet = tweetService.createEmptyTweet();
+        System.out.println("\nEmpty tweet by 'lookup': " + tweet.getClass().getName());*/
+
         // Close contexts
         waitInMillis(1000);
         childContext.close();

@@ -18,4 +18,6 @@
 
     <!--<bean id="Tweet" class="twitter.domain.Tweet"/>-->
 
+    <bean class="twitter.infrastructure.BenchmarkBeanPostProcessor"/>
+
 </beans>

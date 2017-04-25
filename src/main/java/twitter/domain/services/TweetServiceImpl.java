@@ -38,6 +38,7 @@ public class TweetServiceImpl implements TweetService, ApplicationContextAware{
 
     @Autowired
     public TweetServiceImpl(TweetRepository tweetRepository, UserRepository userRepository) {
+        System.out.println("TweetService starting...");
         this.tweetRepository = tweetRepository;
         this.userRepository = userRepository;
     }
@@ -102,7 +103,7 @@ public class TweetServiceImpl implements TweetService, ApplicationContextAware{
     }
 
     @Override
-//    @Benchmark(value = true)
+    @Benchmark(value = true)
     public Tweet createTweet(User user, String tweetText){
         //System.out.println("Creating tweet...");
         Tweet tweet = createNewTweet();
@@ -115,7 +116,7 @@ public class TweetServiceImpl implements TweetService, ApplicationContextAware{
         return (Tweet) serviceContext.getBean("tweet");
     }
 
-    //    @Lookup
+//    @Lookup
     public Tweet createEmptyTweet(){
         return null;
     }
@@ -126,12 +127,14 @@ public class TweetServiceImpl implements TweetService, ApplicationContextAware{
     }
 
     @Override
+//    @Benchmark
     public void createUser(String userName) {
         User user = (User) serviceContext.getBean("user", userName);
         userRepository.save(user);
     }
 
     @Override
+//    @Benchmark
     public void saveUser(User user){
         userRepository.save(user);
     }

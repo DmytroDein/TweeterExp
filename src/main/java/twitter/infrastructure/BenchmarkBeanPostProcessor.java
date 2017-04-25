@@ -24,7 +24,7 @@ public class BenchmarkBeanPostProcessor implements BeanPostProcessor{
         }*/
         boolean isAnnotationFound = Arrays.stream(methods)
                 .anyMatch(method -> (method.isAnnotationPresent(Benchmark.class) && method.getAnnotation(Benchmark.class).value()));
-        //System.out.println("Bean Name: " + beanName + ":  isAnnotationFound: " + isAnnotationFound);
+//        System.out.println("Bean Name: " + beanName + ":  isAnnotationFound: " + isAnnotationFound);
         if (isAnnotationFound){
             System.out.format("Creating benchmark proxy bean for %s\n", beanName);
             resultBean = getBenchmarkProxyBean(bean, beanName);
