@@ -3,6 +3,7 @@ package twitter.infrastructure;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import twitter.domain.services.TweetService;
 import twitter.infrastructure.annotations.Benchmark;
 
 import java.lang.reflect.InvocationHandler;
@@ -50,13 +51,20 @@ public class BenchmarkBeanPostProcessor implements BeanPostProcessor{
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }*/
+        Class<?>[] beanInterfaces = prepareBeanInterfaces(bean);
 
-
-        Object proxifiedBean = Proxy.newProxyInstance(
+        /*Object proxifiedBean = Proxy.newProxyInstance(
                 bean.getClass().getClassLoader(),
                 bean.getClass().getInterfaces(),
                 (proxy, method, args) -> benchmarkMethod(bean, method, args)
+        );*/
+
+        Object proxifiedBean = Proxy.newProxyInstance(
+                bean.getClass().getClassLoader(),
+                beanInterfaces,
+                (proxy, method, args) -> benchmarkMethod(bean, method, args)
         );
+
         /*Object proxifiedBean = Proxy.newProxyInstance(
                 bean.getClass().getClassLoader(),
                 bean.getClass().getInterfaces(),
@@ -70,6 +78,20 @@ public class BenchmarkBeanPostProcessor implements BeanPostProcessor{
                 }
         );*/
         return proxifiedBean;
+    }
+
+    private Class<?>[] prepareBeanInterfaces(Object bean) {
+        String fullBeanName = bean.getClass().getName();
+        System.out.println("full bean name: " + fullBeanName);
+        String shortBeanName = fullBeanName.substring(0, fullBeanName.indexOf("$$"));
+//        System.out.println("short bean name: " + shortBeanName);
+        Class<?>[] beanInterfaces = null;
+        try {
+            beanInterfaces = Class.forName(shortBeanName).getInterfaces();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return beanInterfaces;
     }
 
     private Object benchmarkMethod(Object bean, Method method, Object[] args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {

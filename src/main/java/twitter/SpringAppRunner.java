@@ -60,8 +60,11 @@ public class SpringAppRunner {
 
         System.out.println(ctx2.getBeanFactory().getBeanDefinition("tempable"));*/
 
-    /*    Tweet tweet = tweetService.createEmptyTweet();
-        System.out.println("\nEmpty tweet by 'lookup': " + tweet.getClass().getName());*/
+        //Lookup test
+        waitInMillis(1000);
+        Tweet tweet = tweetService.createEmptyTweet();
+        System.out.println("\nEmpty tweet by 'lookup': " + tweet.getClass().getName());
+        System.out.println("Empty tweet by 'lookup': " + tweet);
 
         //System.out.println(tweetService.getClass().getName());
 
@@ -94,7 +97,6 @@ public class SpringAppRunner {
         System.out.print("User's '" + user1.getUserName() + "' tweets:\n");
         user1.getUsersTweets().forEach(System.out::println);
 
-
         // TimeLine formation
         System.out.println("\n------------------------------------ TimeLine formation check (backward sorting): --------------------------------------");
 //        System.out.println("TimeLine of '" + user1.getUserName() + "':");
@@ -105,14 +107,6 @@ public class SpringAppRunner {
         user1.subscribeTo(user3);
         timeLine.refreshTimeLine();
         timeLine.getTweets().forEach(System.out::println);
-
-
-
-        //Lookup test
-       /* waitInMillis(1000);
-        System.out.println(tweetService);
-        Tweet tweet = tweetService.createEmptyTweet();
-        System.out.println("\nEmpty tweet by 'lookup': " + tweet.getClass().getName());*/
 
         // Close contexts
         waitInMillis(1000);

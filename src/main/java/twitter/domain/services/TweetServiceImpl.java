@@ -26,7 +26,6 @@ import java.util.function.Supplier;
 @Lazy
 public class TweetServiceImpl implements TweetService, ApplicationContextAware{
 
-    //@Autowired
     private final TweetRepository tweetRepository;
     private final UserRepository userRepository;
     ApplicationContext serviceContext;
@@ -65,21 +64,25 @@ public class TweetServiceImpl implements TweetService, ApplicationContextAware{
     }
 
     @Override
+//    @Benchmark
     public Tweet getTweet(long tweetId) {
         return tweetRepository.findById(tweetId);
     }
 
     @Override
+//    @Benchmark
     public User getUser(long userId) {
         return userRepository.getUser(userId);
     }
 
     @Override
+//    @Benchmark
     public List<User> getUsers() {
         return userRepository.findAllUsers();
     }
 
     @Override
+//    @Benchmark
     public User getUser(String userName) {
         Optional<User> checkedUser = Optional.ofNullable(userRepository.getUser(userName));
         return checkedUser.orElseGet(() -> {
@@ -97,13 +100,13 @@ public class TweetServiceImpl implements TweetService, ApplicationContextAware{
     }
 
     @Override
-//    @Benchmark
+    @Benchmark
     public List<Tweet> findAll() {
         return tweetRepository.findAll();
     }
 
     @Override
-    @Benchmark(value = true)
+//    @Benchmark(value = true)
     public Tweet createTweet(User user, String tweetText){
         //System.out.println("Creating tweet...");
         Tweet tweet = createNewTweet();
@@ -116,7 +119,7 @@ public class TweetServiceImpl implements TweetService, ApplicationContextAware{
         return (Tweet) serviceContext.getBean("tweet");
     }
 
-//    @Lookup
+    @Lookup
     public Tweet createEmptyTweet(){
         return null;
     }
