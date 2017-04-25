@@ -3,6 +3,8 @@ package twitter.domain.services;
 
 import twitter.domain.Tweet;
 import twitter.domain.User;
+import twitter.domain.repository.TweetRepository;
+import twitter.domain.repository.UserRepository;
 
 import java.util.List;
 
@@ -12,6 +14,10 @@ public interface TweetService {
     void addTweet(Tweet tweet);
     Tweet createTweet(User user, String tweetText);
     Tweet createEmptyTweet();
+
+    TweetRepository getTweetRepository();
+    UserRepository getUserRepository();
+
     Tweet getTweet(long tweetId);
 
     User getUser(String userName);

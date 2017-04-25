@@ -1,6 +1,7 @@
 package twitter.domain.repository;
 
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 import twitter.domain.Tweet;
 import twitter.infrastructure.annotations.Benchmark;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository("TweeterRepository")
+@Lazy
 public class TweetRepositoryImpl implements TweetRepository {
 
     private List<Tweet> tweetRepo = new ArrayList<>();

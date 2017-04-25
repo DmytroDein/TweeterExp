@@ -1,11 +1,13 @@
 package twitter.domain.services;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -22,45 +24,32 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 @Service("tweetService")
-//@Scope("prototype")
 @Lazy
-public class TweetServiceImpl implements TweetService, ApplicationContextAware{
+@DependsOn(value = {"TweeterRepository", "UserRepository"})
+public class TweetServiceImpl implements TweetService, ApplicationContextAware, InitializingBean{
+//public class TweetServiceImpl implements TweetService, ApplicationContextAware{
 
-    private final TweetRepository tweetRepository;
-    private final UserRepository userRepository;
+    private TweetRepository tweetRepository;
+    private UserRepository userRepository;
     ApplicationContext serviceContext;
-
-    /*@Autowired
-    public TweetServiceImpl(TweetRepository tweetRepository) {
-        this.tweetRepository = tweetRepository;
-    }*/
 
     @Autowired
     public TweetServiceImpl(TweetRepository tweetRepository, UserRepository userRepository) {
-        System.out.println("TweetService starting...");
+        System.out.println("TweetService(repo, repo) starting...");
         this.tweetRepository = tweetRepository;
         this.userRepository = userRepository;
+        //System.out.println(userRepository);
+        //System.out.println(tweetRepository);
     }
 
-    @PostConstruct
-    public void mockTweetsData(){
-//        User user1 = (User) serviceContext.getBean("user", "Douglas");
-        User user1 = getUser("Douglas");
-        Tweet tweetFromUser1 = createTweet(user1, "Some text #1 from user1!" );
-        addTweet(tweetFromUser1);
-        tweetFromUser1 = createTweet(user1, "Some text #2 from user1!" );
-        addTweet(tweetFromUser1);
-        tweetFromUser1 = createTweet(user1, "Some text #3 from user1!" );
-        addTweet(tweetFromUser1);
+    @Override
+    public TweetRepository getTweetRepository() {
+        return tweetRepository;
+    }
 
-//        User user2 = (User) serviceContext.getBean("user", "Michael");
-        User user2 = getUser("Michael");
-        Tweet tweetFromUser2 = createTweet(user2, "Some text #1 from user2!" );
-        addTweet(tweetFromUser2);
-        tweetFromUser2 = createTweet(user2, "Some text #2 from user2!" );
-        addTweet(tweetFromUser2);
-        tweetFromUser2 = createTweet(user2, "Some text #3 from user2!" );
-        addTweet(tweetFromUser2);
+    @Override
+    public UserRepository getUserRepository() {
+        return userRepository;
     }
 
     @Override
@@ -100,7 +89,7 @@ public class TweetServiceImpl implements TweetService, ApplicationContextAware{
     }
 
     @Override
-    @Benchmark
+//    @Benchmark
     public List<Tweet> findAll() {
         return tweetRepository.findAll();
     }
@@ -140,5 +129,31 @@ public class TweetServiceImpl implements TweetService, ApplicationContextAware{
 //    @Benchmark
     public void saveUser(User user){
         userRepository.save(user);
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        mockTweetsData();
+    }
+
+    //    @PostConstruct  // problem of working with double proxy - changed to implementing 'InitializingBean' interface
+    public void mockTweetsData(){
+//        User user1 = (User) serviceContext.getBean("user", "Douglas");
+        User user1 = getUser("Douglas");
+        Tweet tweetFromUser1 = createTweet(user1, "Some text #1 from user1!" );
+        addTweet(tweetFromUser1);
+        tweetFromUser1 = createTweet(user1, "Some text #2 from user1!" );
+        addTweet(tweetFromUser1);
+        tweetFromUser1 = createTweet(user1, "Some text #3 from user1!" );
+        addTweet(tweetFromUser1);
+
+//        User user2 = (User) serviceContext.getBean("user", "Michael");
+        User user2 = getUser("Michael");
+        Tweet tweetFromUser2 = createTweet(user2, "Some text #1 from user2!" );
+        addTweet(tweetFromUser2);
+        tweetFromUser2 = createTweet(user2, "Some text #2 from user2!" );
+        addTweet(tweetFromUser2);
+        tweetFromUser2 = createTweet(user2, "Some text #3 from user2!" );
+        addTweet(tweetFromUser2);
     }
 }

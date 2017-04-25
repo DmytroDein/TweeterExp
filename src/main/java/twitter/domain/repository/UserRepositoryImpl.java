@@ -1,12 +1,14 @@
 package twitter.domain.repository;
 
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 import twitter.domain.User;
 
 import java.util.*;
 
 @Repository("UserRepository")
+@Lazy
 public class UserRepositoryImpl implements UserRepository {
     private Set<User> users = new HashSet<>();
 //    private List<User> users = new ArrayList<>();

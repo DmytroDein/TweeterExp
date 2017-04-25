@@ -51,7 +51,6 @@ public class BenchmarkBeanPostProcessor implements BeanPostProcessor{
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }*/
-        Class<?>[] beanInterfaces = prepareBeanInterfaces(bean);
 
         /*Object proxifiedBean = Proxy.newProxyInstance(
                 bean.getClass().getClassLoader(),
@@ -59,6 +58,7 @@ public class BenchmarkBeanPostProcessor implements BeanPostProcessor{
                 (proxy, method, args) -> benchmarkMethod(bean, method, args)
         );*/
 
+        Class<?>[] beanInterfaces = prepareBeanInterfaces(bean);
         Object proxifiedBean = Proxy.newProxyInstance(
                 bean.getClass().getClassLoader(),
                 beanInterfaces,
@@ -82,12 +82,14 @@ public class BenchmarkBeanPostProcessor implements BeanPostProcessor{
 
     private Class<?>[] prepareBeanInterfaces(Object bean) {
         String fullBeanName = bean.getClass().getName();
-        System.out.println("full bean name: " + fullBeanName);
-        String shortBeanName = fullBeanName.substring(0, fullBeanName.indexOf("$$"));
-//        System.out.println("short bean name: " + shortBeanName);
+        //System.out.println("full bean name: " + fullBeanName);
+        String shortBeanName = (fullBeanName.indexOf("$$") == -1)?
+                fullBeanName : fullBeanName.substring(0, fullBeanName.indexOf("$$"));
+        //System.out.println("short bean name: " + shortBeanName);
         Class<?>[] beanInterfaces = null;
         try {
             beanInterfaces = Class.forName(shortBeanName).getInterfaces();
+            //beanInterfaces = Class.forName(fullBeanName).getInterfaces();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -107,7 +109,7 @@ public class BenchmarkBeanPostProcessor implements BeanPostProcessor{
                 long start = System.nanoTime();
                 result = method.invoke(bean, args);
                 long difference = System.nanoTime() - start;
-                System.out.format("Method %s() executed in %f seconds.\n", methodName, difference / 1.0E+9);
+                System.out.format("Method '%s()' executed in %f seconds.\n", methodName, difference / 1.0E+9);
             } else {
                 //System.out.println("Invocation without annotations.");
                 result = method.invoke(bean, args);

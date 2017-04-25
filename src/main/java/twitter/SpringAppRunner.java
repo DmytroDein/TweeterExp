@@ -35,6 +35,8 @@ public class SpringAppRunner {
         tweetFromUser2 = tweetService.createTweet(user2, "Some text #3 from user2!" );
         tweetService.addTweet(tweetFromUser2);*/
 
+        //System.out.println("TweetRepo in service: "+tweetService.getTweetRepository());
+        //System.out.println("User Repo in service: "+tweetService.getUserRepository());
         System.out.println("\n---------------- List of tweets ------------------");
         tweetService.findAll().forEach(System.out::println);
 
@@ -61,10 +63,10 @@ public class SpringAppRunner {
         System.out.println(ctx2.getBeanFactory().getBeanDefinition("tempable"));*/
 
         //Lookup test
-        waitInMillis(1000);
+       /* waitInMillis(1000);
         Tweet tweet = tweetService.createEmptyTweet();
         System.out.println("\nEmpty tweet by 'lookup': " + tweet.getClass().getName());
-        System.out.println("Empty tweet by 'lookup': " + tweet);
+        System.out.println("Empty tweet by 'lookup': " + tweet);*/
 
         //System.out.println(tweetService.getClass().getName());
 
