@@ -1,6 +1,8 @@
 package twitter.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
@@ -12,6 +14,7 @@ import java.util.*;
 @Component
 @Scope("prototype")
 @Lazy
+//@JsonIgnoreProperties(ignoreUnknown = true)
 public class User implements UserActivity{
     private static long userIdCounter = 1;
 
@@ -43,7 +46,8 @@ public class User implements UserActivity{
         this.userName = userName;
     }
 
-    @JsonBackReference
+//    @JsonBackReference(value = "user")
+    @JsonIgnore
     public List<Tweet> getUsersTweets() {
         return usersTweets;
     }
@@ -54,6 +58,7 @@ public class User implements UserActivity{
         this.usersTweets = usersTweets;
     }
 
+    //@JsonBackReference(value = "subscribed")
     public List<User> getSubscribedTo() {
 //        return subscribedTo;
         return new ArrayList<>(subscribedTo);
@@ -71,7 +76,7 @@ public class User implements UserActivity{
         this.profile = profile;
     }
 
-    @JsonBackReference
+    //@JsonBackReference(value = "mentioned")
     public Set<Tweet> getMentionedInTweets() {
         return mentionedInTweets;
     }

@@ -1,7 +1,6 @@
 package twitter.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -15,6 +14,7 @@ import java.util.Set;
 @Component()
 @Scope("prototype")
 @Lazy
+//@JsonIgnoreProperties(ignoreUnknown = true)
 public class Tweet implements TweetActions{
     private static long tweetIdCounter = 1;
 
@@ -35,6 +35,12 @@ public class Tweet implements TweetActions{
         this.text = text;
     }
 
+    public Tweet(User user, String text, LocalDateTime date) {
+        this.user = user;
+        this.text = text;
+        this.date = date;
+    }
+
     public long getTweetId() {
         return tweetId;
     }
@@ -51,16 +57,16 @@ public class Tweet implements TweetActions{
         this.date = date;
     }
 
+    //@JsonManagedReference
     public List<User> getRetweetedBy() {
         return retweetedBy;
     }
 
-    @JsonManagedReference
     public void setRetweetedBy(List<User> retweetedBy) {
         this.retweetedBy = retweetedBy;
     }
 
-    @JsonManagedReference
+    //@JsonManagedReference
     public Set<User> getLikedBy() {
         return likedBy;
     }
@@ -69,7 +75,7 @@ public class Tweet implements TweetActions{
         this.likedBy = likedBy;
     }
 
-    @JsonManagedReference
+    //@JsonManagedReference(value = "mentioned")
     public Set<User> getMentionedInTweet() {
         return mentionedInTweet;
     }
@@ -85,6 +91,8 @@ public class Tweet implements TweetActions{
         }
     }
 
+//    @JsonManagedReference(value = "user")
+    //@JsonIgnore
     public User getUser() {
         return user;
     }
