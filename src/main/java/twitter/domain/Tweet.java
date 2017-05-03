@@ -3,6 +3,7 @@ package twitter.domain;
 import com.fasterxml.jackson.annotation.*;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
+import org.springframework.hateoas.ResourceSupport;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -15,7 +16,7 @@ import java.util.Set;
 @Scope("prototype")
 @Lazy
 //@JsonIgnoreProperties(ignoreUnknown = true)
-public class Tweet implements TweetActions{
+public class Tweet extends ResourceSupport implements TweetActions {
     private static long tweetIdCounter = 1;
 
     private long tweetId = tweetIdCounter++;

@@ -35,7 +35,7 @@ public class RestTwitterControllerAdvice {
                         long tweetId = Long.parseLong(text);
                         Tweet tweet = tweetService.getTweet(tweetId);
                         if (tweet == null){
-                            throw new NoSuchTweetException("Tweet not found!");
+                            throw new NoSuchTweetException("Tweet {" + tweetId + "} not found!");
                         }
                         setValue(tweet);
                     }

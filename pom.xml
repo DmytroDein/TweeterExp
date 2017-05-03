@@ -20,6 +20,7 @@
         <junit.version>4.12</junit.version>
         <jetty.version>9.3.17.v20170317</jetty.version>
         <jackson.version>2.8.8</jackson.version>
+        <spring.hateoas>0.23.0.RELEASE</spring.hateoas>
     </properties>
 
 
@@ -82,6 +83,11 @@
         </dependency>
 
 
+        <dependency>
+            <groupId>org.springframework.hateoas</groupId>
+            <artifactId>spring-hateoas</artifactId>
+            <version>${spring.hateoas}</version>
+        </dependency>
 
         <!-- Embedded Jetty server -->
         <!--<dependency>

@@ -1,17 +1,18 @@
 package twitter.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import twitter.domain.Tweet;
-import twitter.domain.User;
 import twitter.domain.services.TweetService;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
+
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -71,10 +72,43 @@ public class RestTwitterController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/tweet",
             produces = "application/json", consumes = "application/json")
-    public ResponseEntity<Void> createTweet(@RequestBody Tweet tweet, UriComponentsBuilder builder){
-        System.out.println("Acquired tweet: "+ tweet);
+    public ResponseEntity<Void> createTweet(@RequestBody Tweet tweet, UriComponentsBuilder builder) {
+        tweetService.addTweet(tweet);
+        System.out.println("Acquired tweet: " + tweet);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(builder.path("/tweet/{tweetId}").buildAndExpand(4).toUri());
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
+
+
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = {"/tweetht/{tweetId}"},
+            produces = "application/json")
+    public Tweet tweetHATEOAS(@PathVariable("tweetId") Long id) {
+        return tweetService.getTweet(id);
+    }
+
+    @RequestMapping(
+            method = RequestMethod.POST,
+            value = {"/tweetht"},
+            produces = "application/json",
+            consumes = "application/json")
+    public ResponseEntity<Tweet> newTweetHATEOAS(@RequestBody Tweet tweet) {
+        tweetService.addTweet(tweet);
+        System.out.println(tweet);
+
+        HttpHeaders headers = new HttpHeaders();
+        Link link = linkTo(methodOn(RestTwitterController.class).tweetHATEOAS(4L)).withSelfRel();
+        Link linkAll = linkTo(methodOn(RestTwitterController.class).listTweets()).withRel("all");
+        tweet.add(link);
+        tweet.add(linkAll);
+
+        headers.setLocation(URI.create(link.getHref()));
+
+        ResponseEntity<Tweet> responseEntity = new ResponseEntity<>(tweet, HttpStatus.CREATED);
+        return responseEntity;
+
+    }
+
 }
