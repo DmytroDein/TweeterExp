@@ -20,7 +20,8 @@
         <junit.version>4.12</junit.version>
         <jetty.version>9.3.17.v20170317</jetty.version>
         <jackson.version>2.8.8</jackson.version>
-        <spring.hateoas>0.23.0.RELEASE</spring.hateoas>
+        <spring.hateoas.version>0.23.0.RELEASE</spring.hateoas.version>
+        <spring.security.version>4.2.2.RELEASE</spring.security.version>
     </properties>
 
 
@@ -86,8 +87,24 @@
         <dependency>
             <groupId>org.springframework.hateoas</groupId>
             <artifactId>spring-hateoas</artifactId>
-            <version>${spring.hateoas}</version>
+            <version>${spring.hateoas.version}</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-config -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+
+
 
         <!-- Embedded Jetty server -->
         <!--<dependency>
