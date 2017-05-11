@@ -29,7 +29,7 @@
             default-target-url="/web/hello"
             always-use-default-target="true"/>-->
 
-        <!--<logout/>-->
+        <!--<logout/>-->    <!-- for path '/logout' -->
         <logout logout-url="/web/app/logout"/>
 
         <csrf disabled="true"/>
