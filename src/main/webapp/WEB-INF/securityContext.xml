@@ -8,21 +8,29 @@
 
     <!--<http />-->
 
- <!--   <http use-expressions="false">
+    <!-- Anonymous login -->
+    <!--<http use-expressions="false">
         <intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <form-login/>
     </http>-->
 
+    <!-- Secure login -->
     <http>
-        <intercept-url pattern="/app/loginp" access="isAnonymous()" method="GET"/>
-        <intercept-url pattern="/**" access="hasAnyRole('USER', 'ADMIN')" />
+        <intercept-url pattern="/web/app/loginpage" access="isAnonymous()" method="GET"/>
+        <intercept-url pattern="/web/app/login" access="isAnonymous()" method="POST"/>
+        <intercept-url pattern="/web/**" access="hasAnyRole('USER', 'ADMIN')" />
+
         <!--<form-login />-->
-        <form-login login-page="/app/loginp"
-            login-processing-url="/app/login"
-            default-target-url=""
-            always-use-default-target="true"/>
-        <!--<logout logout-url="/app/logout"/>-->
-        <logout/>
+        <form-login login-page="/web/app/loginpage"
+                    login-processing-url="/web/app/login"/>
+
+        <!--<form-login login-page="/web/app/loginp"
+            login-processing-url="/web/app/login"
+            default-target-url="/web/hello"
+            always-use-default-target="true"/>-->
+
+        <!--<logout/>-->
+        <logout logout-url="/web/app/logout"/>
 
         <csrf disabled="true"/>
     </http>

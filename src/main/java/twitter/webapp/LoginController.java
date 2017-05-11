@@ -6,8 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class LoginController {
 
-    @RequestMapping("/app/loginp")
+    @RequestMapping("/app/loginpage")
     public String UserLogin(){
-        return "login";
+//        return "./loginout/login";
+        return "./loginout/login_css";
     }
 }
